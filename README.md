@@ -21,5 +21,7 @@ The Job Application Tracker is a web application built with React that helps you
    - Flask: Micro web framework for Python.
    - MySQL: Relational database for storing job application data.
 
-
+## Notice
+- Open your browser and visit `http://localhost:3000` to view the application.
+- visit `http://localhost:3000/insert` to insert your new job application 
 
