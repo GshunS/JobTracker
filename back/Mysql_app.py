@@ -123,6 +123,34 @@ def queryAll():
                           'status': job.status})
     return jsonify(init_list)
 
+@app.route('/insert', methods=['POST'])
+@cross_origin(origin='http://localhost:3000', headers=['Content-Type'])
+def insert_application():
+    try:
+        data = request.get_json()
+        diff = insert(data)
+        return jsonify({'message': 'success', 'diff': diff}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+def insert(jobs_json):
+    before_count = Jobs.query.count()
+    job_list = []
+    for job in jobs_json:
+        title = job['title']
+        company = job['company']
+        applied_time = job['applied_time']
+        status = job['status']
+        job = Jobs(title=title, company=company, applied_time=applied_time, status=status)
+        job_list.append(job)
+
+    db.session.add_all(job_list)
+    db.session.commit()
+
+    end_count = Jobs.query.count()
+    return end_count - before_count
+
 @app.route('/update_status', methods=['POST'])
 @cross_origin(origin='http://localhost:3000', headers=['Content-Type'])
 def update_status():
