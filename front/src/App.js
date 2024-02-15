@@ -29,7 +29,8 @@ function App() {
     };
 
     useEffect(() => {
-
+        console.log(orderType)
+        console.log(orderAttr)
         fetchData();
 
     }, [orderType]);
@@ -79,13 +80,8 @@ function App() {
     };
 
     // order title
-    const handleTitleClick = (attr) => () => {
+    const handleTitleClick = (attr) => async () => {
         let newOrder = null;
-        if(attr !== orderAttr){
-            setOrderType(newOrder);
-            setOrderAttr(attr);
-            return;
-        }
 
         // Determine the new order based on the current state
         if (orderType === 'asc') {

@@ -100,10 +100,10 @@ def queryWithCondition(order_attr, order_type, filter_status):
 
     if order_attr != 'null':
         if order_type == 'asc':
-            result = result.order_by(map_dict[order_attr].asc())
+            return result.order_by(map_dict[order_attr].asc())
 
         if order_type == 'desc':
-            result = result.order_by(map_dict[order_attr].desc())
+            return result.order_by(map_dict[order_attr].desc())
 
     return result.order_by(map_dict['applied_time'].desc())
 

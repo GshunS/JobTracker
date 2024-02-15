@@ -5,6 +5,14 @@ const status = ['APPLYING', 'FIRST_INTERVIEW', 'SECOND_INTERVIEW', 'REJECTED', '
 
 const About = () => {
 
+    const getCurrentDate = () => {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+
     const initialRow = {
         id: 1,
         title: '',
@@ -20,11 +28,12 @@ const About = () => {
             id: rows.length + 1, // Assign a unique ID to each row
             title: '',
             company: '',
-            applied_time: '',
+            applied_time: getCurrentDate(),
             status: status[0] // Set default status
         }]);
 
     };
+
 
     const isValidDate = (dateString) => {
         const regEx = /^\d{4}-\d{2}-\d{2}$/;
@@ -33,12 +42,18 @@ const About = () => {
     };
 
     const handleInsert = () => {
-
+        console.log(rows)
         for (const row of rows) {
-            if (!row.title || !row.company || !row.applied_time) {
+            if (!row.applied_time.trim()) {
+                row.applied_time = getCurrentDate()
+                // alert('Applied time must be filled.');
+                // return; // Prevent form submission if applied_time is empty
+            }
+            if (!row.title.trim() || !row.company.trim()) {
                 alert('Please fill in all fields before submitting.');
                 return; // Prevent form submission if any field is empty
             }
+
             if (!isValidDate(row.applied_time)) {
                 alert('Invalid date format in applied_time field.');
                 return; // Prevent form submission if date format is invalid
@@ -126,13 +141,14 @@ const About = () => {
                                         <td className="cell100 column3">
                                             <input
                                                 type="text"
-
-                                                placeholder='yyyy-mm-dd'
+                                                placeholder={getCurrentDate()}
+                                                defaultValue={rows[index]?.applied_time || getCurrentDate()}
                                                 onChange={(e) => {
                                                     const updatedRows = [...rows];
                                                     updatedRows[index].applied_time = e.target.value;
                                                     setRows(updatedRows);
                                                 }}
+
                                             />
                                         </td>
                                         <td className="cell100 column4">
