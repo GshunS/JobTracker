@@ -102,7 +102,9 @@ const About = () => {
                                     <th className="cell100 column03">Applied_time</th>
                                     <th className="cell100 column04">Status</th>
                                     <th className="cell100 column05" onClick={addRow}>
-                                        <strong>+</strong>
+                                        <img
+                                            src={require("../icons/add_button2.png")}
+                                            alt="insert"/>
                                     </th>
                                 </tr>
                                 </thead>

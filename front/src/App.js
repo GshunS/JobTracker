@@ -6,7 +6,7 @@ import InsertPage from './Pages/Insert'
 function App() {
     // fetch the data from the backend
     const [data, setData] = useState([]);
-
+    const backendUrl = 'http://localhost:5000';
     // defind the status
     const status = ['APPLYING', 'FIRST_INTERVIEW', 'SECOND_INTERVIEW', 'REJECTED', 'CANCELLED']
 
@@ -17,6 +17,7 @@ function App() {
     // save the updated status
     const [selectedStatus, setSelectedStatus] = useState({});
     const [filterStatus, setFilterStatus] = useState(null);
+
 
     const handleStatusChange = (itemId, newStatus) => {
         setSelectedStatus(prevStatus => ({
@@ -29,8 +30,6 @@ function App() {
     };
 
     useEffect(() => {
-        console.log(orderType)
-        console.log(orderAttr)
         fetchData();
 
     }, [orderType]);
@@ -52,9 +51,12 @@ function App() {
         }
     };
 
+    const goInsertPage = () => {
+        window.location.href = 'http://localhost:3000/insert'
+    }
+
     // send id and new status to the backend
     const sendStatusToBackend = (itemId, newStatus) => {
-        const backendUrl = 'http://localhost:5000';
 
         // Make a POST request to your Flask backend
         fetch(`${backendUrl}/update_status`, {
@@ -97,6 +99,33 @@ function App() {
         setOrderAttr(attr)
     };
 
+    const handleDeleteRecord = (record_id) => {
+        if (window.confirm("Delete this record?") === false) {
+            return;
+        }
+        // Make a POST request to your Flask backend
+        fetch(`${backendUrl}/delete`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({record_id}),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                window.location.reload();
+                return response.json();
+            })
+            .then(data => {
+                console.log('Server response:', data);
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }
+
     return (
         <Router>
             <Routes>
@@ -110,20 +139,26 @@ function App() {
                                         <table>
                                             <thead>
                                             <tr className="row100 head">
-                                                <th className="cell100 column0">Index</th>
+                                                <th className="cell100 headColumn0">Index</th>
                                                 <th
-                                                    className="cell100 column1"
+                                                    className="cell100 headColumn1"
                                                     onClick={handleTitleClick('title')}
                                                 >
                                                     Title
                                                 </th>
-                                                <th className="cell100 column2"
+                                                <th className="cell100 headColumn2"
                                                     onClick={handleTitleClick('company')}
                                                 >
                                                     Company
                                                 </th>
-                                                <th className="cell100 column3">Applied_time</th>
-                                                <th className="cell100 column4">Status</th>
+                                                <th className="cell100 headColumn3">Applied_time</th>
+                                                <th className="cell100 headColumn4">Status</th>
+                                                <th className="cell100 headColumn5" onClick={goInsertPage}>
+                                                    <img
+                                                        className="insert_img"
+                                                        src={require("./icons/add_button2.png")}
+                                                        alt="insert"/>
+                                                </th>
 
                                             </tr>
                                             </thead>
@@ -137,11 +172,11 @@ function App() {
                                                     key={item.id}
                                                     className={`row100 body`}
                                                 >
-                                                    <td className="cell100 column0">{index + 1}</td>
-                                                    <td className="cell100 column1">{item.title}</td>
-                                                    <td className="cell100 column2">{item.company}</td>
-                                                    <td className="cell100 column3">{item.applied_time}</td>
-                                                    <td className="cell100 column4">
+                                                    <td className="cell100 mainColumn0">{index + 1}</td>
+                                                    <td className="cell100 mainColumn1">{item.title}</td>
+                                                    <td className="cell100 mainColumn2">{item.company}</td>
+                                                    <td className="cell100 mainColumn3">{item.applied_time}</td>
+                                                    <td className="cell100 mainColumn4">
                                                         <select
                                                             className="status"
                                                             value={selectedStatus[item.id] || item.status}
@@ -153,6 +188,14 @@ function App() {
                                                                 </option>
                                                             ))}
                                                         </select>
+                                                    </td>
+                                                    <td className="cell100 mainColumn5"
+                                                        onClick={() => handleDeleteRecord(item.id)}
+                                                    >
+                                                        <img
+                                                            className="delete_img"
+                                                            src={require("./icons/remove_button.png")}
+                                                            alt="delete"/>
                                                     </td>
                                                 </tr>
                                             )}

@@ -169,39 +169,76 @@ th, td {
     padding-right: 10px;
 }
 
-.column0 {
+
+.headColumn0 {
     text-align: center;
-    width: 8%;
+    width: 6%;
     padding-left: 10px;
 }
 
-.column1 {
+.headColumn1 {
     text-align: center;
-    width: 33%;
+    width: 26%;
 }
 
-.column2 {
+.headColumn2 {
     text-align: center;
     width: 20%;
 }
 
-.column3 {
+.headColumn3 {
     text-align: center;
-    width: 18%;
+    width: 12%;
 }
 
-.column4 {
+.headColumn4 {
     text-align: center;
     width: 21%;
     padding-left: 20px;
 }
 
-/*.column5 {*/
-/*width: 13%;*/
-/*}*/
+.headColumn5 {
+    width: 6%;
+}
+
+.mainColumn0 {
+    text-align: center;
+    width: 7%;
+    padding-left: 10px;
+}
+
+.mainColumn1 {
+    text-align: center;
+    width: 29%;
+}
+
+.mainColumn2 {
+    text-align: center;
+    width: 22%;
+    padding-left: 1%;
+}
+
+.mainColumn3 {
+    text-align: center;
+    width: 13%;
+    padding-left: 1%;
+}
+
+.mainColumn4 {
+    text-align: center;
+    width: 24%;
+    padding-left: 1%;
+}
+
+.mainColumn5 {
+    font-size: 20px;
+    text-align: center;
+    width: 6%;
+}
+
 .table100-head th {
     padding-top: 18px;
-    padding-bottom: 18px;
+    padding-bottom: 9px;
 }
 
 .table100-body td {
@@ -518,5 +555,8 @@ th, td {
     width: 80%;
 }
 
+.delete_img {
+    padding-left: 17px;
+}
 
 
