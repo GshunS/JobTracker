@@ -27,7 +27,7 @@ The Job Application Tracker is a web application built with React that helps you
 
 ## What does it look like?
 - **Main page**:
-![main](https://github.com/GshunS/jobs/assets/52339999/3c82d9df-6c30-4dd2-83d1-0213628c6dac)
+![mainPage](https://github.com/GshunS/jobs/assets/52339999/89489960-09d1-4150-a178-fb1704e7de56)
 
 - **Insert page**:
 ![insert](https://github.com/GshunS/jobs/assets/52339999/d4a0196a-5588-482f-84f2-e13c28c88398)
