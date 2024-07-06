@@ -44,8 +44,8 @@ class Status(Enum):
 
 class Jobs(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
-    title = db.Column(db.String(45), nullable=False)
-    company = db.Column(db.String(45), nullable=False)
+    title = db.Column(db.String(200), nullable=False)
+    company = db.Column(db.String(200), nullable=False)
     applied_time = db.Column(db.Date, nullable=False)
     password = db.Column(db.Date, nullable=True)
     status = db.Column(db.String(45), nullable=False)
@@ -80,8 +80,8 @@ def insertRecord(jobs_json):
     before_count = Jobs.query.count()
     job_list = []
     for job in jobs_json:
-        title = job['title']
-        company = job['company']
+        title = job['title'].strip()
+        company = job['company'].strip()
         applied_time = job['applied_time']
         status = job['status']
         job = Jobs(title=title, company=company, applied_time=applied_time, status=status)

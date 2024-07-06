@@ -22,6 +22,7 @@ const About = () => {
     };
 
     const [rows, setRows] = useState([initialRow]);
+    const [isDisabled, setDisabled] = useState(false);
 
     const addRow = () => {
         setRows([...rows, {
@@ -42,20 +43,23 @@ const About = () => {
     };
 
     const handleInsert = () => {
-        console.log(rows)
+        setDisabled(true);
         for (const row of rows) {
             if (!row.applied_time.trim()) {
                 row.applied_time = getCurrentDate()
+
                 // alert('Applied time must be filled.');
                 // return; // Prevent form submission if applied_time is empty
             }
             if (!row.title.trim() || !row.company.trim()) {
                 alert('Please fill in all fields before submitting.');
+                setDisabled(false);
                 return; // Prevent form submission if any field is empty
             }
 
             if (!isValidDate(row.applied_time)) {
                 alert('Invalid date format in applied_time field.');
+                setDisabled(false);
                 return; // Prevent form submission if date format is invalid
             }
         }
@@ -71,19 +75,23 @@ const About = () => {
             body: JSON.stringify(rows),
         })
             .then(response => {
+
                 if (!response.ok) {
                     alert('insert failure')
+                    setDisabled(false);
                     throw new Error('Network response was not ok');
                 }
                 return response.json();
             })
             .then(data => {
                 alert(data['diff'] + ' records has been inserted');
+                setDisabled(false);
                 window.location.href = 'http://localhost:3000'
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
             });
+
     };
 
 
@@ -170,7 +178,7 @@ const About = () => {
                                                 ))}
                                             </select>
                                         </td>
-                                        <td className="cell100 column5"></td>
+                                        <td className="cell100 column5"/>
                                     </tr>
                                 ))}
                                 </tbody>
@@ -182,10 +190,10 @@ const About = () => {
                     <table>
                         <tbody>
                         <tr key='submitButton'>
-                            <td className="submit"
-                                onClick={e => handleInsert()}
-                            >
-                                Submit
+                            <td className="submit">
+                                <button type="button" onClick={e => handleInsert()} disabled={isDisabled}>
+                                    Submit
+                                </button>
                             </td>
                         </tr>
                         </tbody>
